@@ -1,0 +1,92 @@
+{% extends 'login/login_base.html' %}
+
+{% block content %}
+<style>
+    body {
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        background-color: #f7f7f7;
+        padding: 40px;
+    }
+    form {
+        background-color: #ffffff;
+        max-width: 300px;
+        margin: 50px auto;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    label {
+        margin-bottom: 5px;
+        display: block;
+        color: #666;
+    }
+    input[type="text"],
+    input[type="password"] {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    button {
+        width: 100%;
+        padding: 10px;
+        background-color: #4287f5;
+        border: none;
+        border-radius: 4px;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+    }
+    button:hover {
+        
+        background-color: #174999;
+    }
+    alert {
+        margin-bottom: 10px;
+    }
+    .alert-success {
+        color: #4F8A10;
+        background-color: #DFF2BF;
+        border: 1px solid #4F8A10;
+    }
+
+    .alert-error {
+        color: #D8000C;
+        background-color: #FFBABA;
+        border: 1px solid #D8000C;
+    }
+
+</style>
+
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+
+<h2>UniFood</h2>
+<form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <div>
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" required>
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+    </div>
+    <button type="submit">Login</button>
+    <hr>
+    <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+</form>
+{% endblock %}

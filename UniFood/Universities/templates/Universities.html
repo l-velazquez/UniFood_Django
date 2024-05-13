@@ -1,0 +1,9 @@
+{% extends 'login/login_base.html' %}
+    <h1>List of Universities</h1>
+    <ul>
+        {% for university in universities %}
+            <li>{{ university.name }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
