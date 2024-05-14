@@ -17,7 +17,7 @@ def login(request):
         password = request.POST.get('password')
 
         # For debugging purposes
-        debug = True  # Set to False in production
+          # Set to False in production
         if debug:
             print(f'Email: {email}')
             print(f'Password: {password}')
@@ -64,5 +64,47 @@ def login(request):
 
 
 def register(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        university_id = request.POST.get('university_id')
+
+        data = {
+            'email': email,
+            'password': password,
+            'first_name': first_name,
+            'last_name': last_name,
+            'university_id': university_id
+        }
+        headers = {
+            'Content-Type': 'application/json',
+            'ApiKey': os.getenv('API_KEY')
+        }
+
+        api_url = os.getenv('API_URL') + 'Register'
+
+        response = requests.post(api_url, json=data, headers=headers, verify=False)
+
+        if debug:
+            print(f'URL: {api_url}')
+            print(f'Status code: {response.status_code}')
+            print(f'Headers: {headers}')
+            print(f'Response: {response.text}')
+        
+        if response.status_code == 200:
+            messages.success(request, 'You have successfully registered')
+            return redirect('/login')
+        elif response.status_code == 400:
+            messages.error(request, 'Invalid email or password')
+            return render(request, 'register.html')
+        elif response.status_code == 401:
+            messages.error(request, 'Unauthorized')
+            return render(request, 'error/401.html')
+        elif response.status_code == 404:
+            return render(request, 'error/404.html')
+        else:
+            return render(request, 'failure.html')
     return render(request, 'register.html')
 

@@ -1,0 +1,95 @@
+    {% extends 'login/login_base.html' %}
+    {% block title %}Register{% endblock %}
+
+    {% block content %}
+        <h1>Register</h1>
+        <style>
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background-color: #f9f9f9;
+                color: #333;
+                text-align: center;
+                padding: 40px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: right;
+                height: 100vh;
+                margin: 0;
+            }
+            h1 {
+                color: #cc0000;
+                font-size: 48px;
+                margin-bottom: 10px;
+            }
+            p {
+                font-size: 20px;
+                margin: 10px 0;
+            }
+            a {
+                color: #0077cc;
+                text-decoration: none;
+                font-size: 18px;
+                margin: 5px;
+            }
+            a:hover {
+                text-decoration: underline;
+            }
+            .icon {
+                font-size: 72px;
+                color: #cc0000;
+                margin-bottom: 20px;
+            }
+            .form-row {
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 10px;
+            }
+            .form-row label {
+                margin-bottom: 5px;
+            }
+            .form-row input {
+                padding: 5px;
+            }
+            .form-row button {
+                margin-top: 10px;
+            }
+        </style>
+
+        {% if messages %}
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST" action="{% url 'register' %}">
+            {% csrf_token %}
+
+            <div class="form-row">
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email" required>
+            </div>
+
+            <div class="form-row">
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="password" required>
+            </div>
+
+            <div class="form-row">
+                <label for="first_name">First Name:</label>
+                <input type="text" name="first_name" id="first_name" required>
+            </div>
+
+            <div class="form-row">
+                <label for="last_name">Last Name:</label>
+                <input type="text" name="last_name" id="last_name" required>
+            </div>
+
+            <div class="form-row">
+                <label for="university_id">University ID:</label>
+                <input type="text" name="university_id" id="university_id" required>
+            </div>
+
+            <button type="submit">Register</button>
+        </form>
+    {% endblock %}

@@ -1,9 +1,10 @@
-{% extends 'login/login_base.html' %}
+{% extends 'base.html' %}
+
+{% block content %}
     <h1>List of Universities</h1>
     <ul>
         {% for university in universities %}
-            <li>{{ university.name }}</li>
+            <li>{{ university.name}}</li>
         {% endfor %}
     </ul>
-</body>
-</html>
+{% endblock %}
