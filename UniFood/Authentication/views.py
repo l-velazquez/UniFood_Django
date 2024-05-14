@@ -23,7 +23,7 @@ def login(request):
             print(f'Password: {password}')
 
         # Send credentials to API
-        api_url = os.getenv('API_URL') + 'Login/'
+        api_url = os.getenv('API_URL') + 'Login'
 
         data = {
             'email': email,
@@ -33,7 +33,7 @@ def login(request):
             'Content-Type': 'application/json',
             'ApiKey': os.getenv('API_KEY')
         }
-        response = requests.post(api_url, json=data, headers=headers)
+        response = requests.post(api_url, json=data, headers=headers, verify=False)
 
         if debug:
             print(f'URL: {api_url}')
@@ -51,6 +51,9 @@ def login(request):
         elif response.status_code == 400:
             messages.error(request, 'Invalid email or password')
             return render(request, 'login.html')
+        elif response.status_code == 401:
+            messages.error(request, 'Unauthorized')
+            return render(request, 'error/401.html')
         elif response.status_code == 404:
             return render(request, 'error/404.html')
         else:
