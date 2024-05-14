@@ -35,10 +35,10 @@ def login(request):
         }
         response = requests.post(api_url, json=data, headers=headers, verify=False)
 
-        if debug:
-            print(f'URL: {api_url}')
-            print(f'Status code: {response.status_code}')
-            print(f'Response: {response.text}')  # Changed to print the text of the response
+        # if debug:
+        #     print(f'URL: {api_url}')
+        #     print(f'Status code: {response.status_code}')
+        #     print(f'Response: {response.text}')  # Changed to print the text of the response
         
         #save the response JWT to django session
         token = response.text
@@ -89,11 +89,11 @@ def register(request):
         response = requests.post(os.getenv('API_URL')+'Resgister', json=data, headers=headers, verify=False)
         
 
-        if debug:
-            print("URL:", os.getenv('API_URL')+'Resgister')
-            print(f'Status code: {response.status_code}')
-            print(f'Headers: {headers}')
-            print(f'Response: {response.text}')
+        # if debug:
+        #     print("URL:", os.getenv('API_URL')+'Resgister')
+        #     print(f'Status code: {response.status_code}')
+        #     print(f'Headers: {headers}')
+        #     print(f'Response: {response.text}')
         
         if response.status_code == 200:
             messages.success(request, 'You have successfully registered')
