@@ -1,95 +1,122 @@
-    {% extends 'login/login_base.html' %}
-    {% block title %}Register{% endblock %}
+{% extends 'login/login_base.html' %}
+{% block title %}Register{% endblock %}
 
-    {% block content %}
-        <h1>Register</h1>
-        <style>
-            body {
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                background-color: #f9f9f9;
-                color: #333;
-                text-align: center;
-                padding: 40px;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: right;
-                height: 100vh;
-                margin: 0;
-            }
-            h1 {
-                color: #cc0000;
-                font-size: 48px;
-                margin-bottom: 10px;
-            }
-            p {
-                font-size: 20px;
-                margin: 10px 0;
-            }
-            a {
-                color: #0077cc;
-                text-decoration: none;
-                font-size: 18px;
-                margin: 5px;
-            }
-            a:hover {
-                text-decoration: underline;
-            }
-            .icon {
-                font-size: 72px;
-                color: #cc0000;
-                margin-bottom: 20px;
-            }
-            .form-row {
-                display: flex;
-                flex-direction: column;
-                margin-bottom: 10px;
-            }
-            .form-row label {
-                margin-bottom: 5px;
-            }
-            .form-row input {
-                padding: 5px;
-            }
-            .form-row button {
-                margin-top: 10px;
-            }
-        </style>
+{% block content %}
+<h1>Register</h1>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+        text-align: center;
+        padding: 40px;
+        display: flex;
+        flex-direction: center;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+    h1 {
+        color: #072856ff;
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+    p {
+        font-size: 16px;
+        margin: 10px 0;
+    }
+    a {
+        color: #0077cc;
+        text-decoration: none;
+        font-size: 14px;
+        margin: 5px;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+    .icon {
+        font-size: 72px;
+        color: #cc0000;
+        margin-bottom: 20px;
+    }
+    .form-container {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    .form-row {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+    }
+    .form-row label {
+        margin-bottom: 5px;
+        text-align: left;
+        font-size: 14px;
+    }
+    .form-row input, .form-row select {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+    .form-row button {
+        padding: 10px;
+        background-color: #072856ff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    .form-row button:hover {
+        background-color: #005782ff;
+    }
+</style>
 
-        {% if messages %}
-            {% for message in messages %}
-                <p>{{ message }}</p>
-            {% endfor %}
-        {% endif %}
+{% if messages %}
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
+{% endif %}
 
-        <form method="POST" action="{% url 'register' %}">
-            {% csrf_token %}
-
-            <div class="form-row">
-                <label for="email">Email:</label>
-                <input type="email" name="email" id="email" required>
-            </div>
-
-            <div class="form-row">
-                <label for="password">Password:</label>
-                <input type="password" name="password" id="password" required>
-            </div>
-
-            <div class="form-row">
-                <label for="first_name">First Name:</label>
-                <input type="text" name="first_name" id="first_name" required>
-            </div>
-
-            <div class="form-row">
-                <label for="last_name">Last Name:</label>
-                <input type="text" name="last_name" id="last_name" required>
-            </div>
-
-            <div class="form-row">
-                <label for="university_id">University ID:</label>
-                <input type="text" name="university_id" id="university_id" required>
-            </div>
-
+<div class="form-container">
+    <form method="POST" action="{% url 'register' %}">
+        {% csrf_token %}
+        <div class="form-row">
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" required>
+        </div>
+        <div class="form-row">
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" required>
+        </div>
+        <div class="form-row">
+            <label for="first_name">First Name:</label>
+            <input type="text" name="first_name" id="first_name" required>
+        </div>
+        <div class="form-row">
+            <label for="last_name">Last Name:</label>
+            <input type="text" name="last_name" id="last_name" required>
+        </div>
+        <div class="form-row">
+            <label for="university_id">University:</label>
+            <select name="university_id" id="university_id" class="form-select" required>
+                <option value="" disabled selected>Select your university</option>
+                {% for university in universities %}
+                    <option value="{{ university.id }}">{{ university.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-row">
             <button type="submit">Register</button>
-        </form>
-    {% endblock %}
+        </div>
+    </form>
+</div>
+{% endblock %}
+

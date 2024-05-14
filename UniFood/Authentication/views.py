@@ -64,6 +64,13 @@ def login(request):
 
 
 def register(request):
+    headers = {
+            'Content-Type': 'application/json',
+            'ApiKey': os.getenv('API_KEY')
+        }
+    response_university = requests.get(os.getenv('API_URL') + 'Universities', headers=headers, verify=False)    
+    universities = response_university.json()
+    
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
@@ -78,17 +85,12 @@ def register(request):
             'last_name': last_name,
             'university_id': university_id
         }
-        headers = {
-            'Content-Type': 'application/json',
-            'ApiKey': os.getenv('API_KEY')
-        }
-
-        api_url = os.getenv('API_URL') + 'Register'
-
-        response = requests.post(api_url, json=data, headers=headers, verify=False)
+        
+        response = requests.post(os.getenv('API_URL')+'Resgister', json=data, headers=headers, verify=False)
+        
 
         if debug:
-            print(f'URL: {api_url}')
+            print("URL:", os.getenv('API_URL')+'Resgister')
             print(f'Status code: {response.status_code}')
             print(f'Headers: {headers}')
             print(f'Response: {response.text}')
@@ -106,5 +108,5 @@ def register(request):
             return render(request, 'error/404.html')
         else:
             return render(request, 'failure.html')
-    return render(request, 'register.html')
+    return render(request, 'register.html', {'universities': universities})
 
