@@ -1,8 +1,8 @@
 {% extends 'login/login_base.html' %}
 {% block title %}Register{% endblock %}
+{%load static%}
 
 {% block content %}
-<h1>Register</h1>
 <style>
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -77,6 +77,10 @@
     .form-row button:hover {
         background-color: #005782ff;
     }
+    img {
+        width: 200px;
+        height: 200px;
+    }
 </style>
 
 {% if messages %}
@@ -84,7 +88,7 @@
         <p>{{ message }}</p>
     {% endfor %}
 {% endif %}
-
+<img src="{% static 'image/unifood_fork_better_pin.png' %}" class="icon">
 <div class="form-container">
     <form method="POST" action="{% url 'register' %}">
         {% csrf_token %}
