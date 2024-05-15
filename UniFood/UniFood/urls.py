@@ -25,10 +25,14 @@ from Users import views as user_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', auth_views.login, name='login'),
+    path('logout/', auth_views.logout, name='logout'),
     path('register/', auth_views.register, name='register'),
     path('home/', user_views.home, name='home'),
     path('universities/', uni_views.get_all_universities, name='universities'),
     path('universities/<int:university_id>/', uni_views.get_university, name='university'),
+    path('places/<int:id>', place_views.get_all_places, name='places'),
+    #path('menus/', menu_views.get_all_menus, name='menus'),
+    #path('menus/<int:menu_id>/', menu_views.get_menu, name='menu'),
 
 
 ]

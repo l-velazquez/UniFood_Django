@@ -1,0 +1,16 @@
+{% extends 'uni_base.html' %}
+
+{% block content %}
+    <h1>List of Places in {{university.name}}</h1>
+    <div class="university-container">
+        {% for place in places %}
+            <div class="university-box">
+                <p>{{ place.name }}</p>
+                <p>{{ place.description }}</p>
+                <p>{{ place.priceAverage }}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+

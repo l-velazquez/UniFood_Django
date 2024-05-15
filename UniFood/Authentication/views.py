@@ -63,6 +63,11 @@ def login(request):
     
     return render(request, 'login.html')
 
+def logout(request):    
+    request.session.flush()
+    return redirect('/')
+
+
 
 def register(request):
     headers = {

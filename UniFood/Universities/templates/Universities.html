@@ -4,11 +4,11 @@
     <h1>List of Universities</h1>
     <div class="university-container">
         {% for university in universities %}
+        <a href="/places/{{ university.id }}">
             <div class="university-box">
-                <p>{{ university.name }}</p>
+                {{ university.id}}. {{ university.name }}
             </div>
+        </a>
         {% endfor %}
     </div>
 {% endblock %}
-
-

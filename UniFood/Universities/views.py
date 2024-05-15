@@ -45,8 +45,8 @@ def get_all_universities(request):
 
     extra_context = {'universities': universities}
 
-    if debug:
-        print(f'Context: {extra_context}')
+    # if debug:
+    #     print(f'Context: {extra_context}')
     # print(universities_name)
 
     return render(request, 'Universities.html', extra_context)
