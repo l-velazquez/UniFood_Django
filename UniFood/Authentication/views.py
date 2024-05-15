@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import os
 from django.contrib import messages
 from django.shortcuts import redirect
+from datetime import datetime
 
 # Create your views here.
 
@@ -81,23 +82,24 @@ def register(request):
         data = {
             'email': email,
             'password': password,
-            'first_name': first_name,
-            'last_name': last_name,
-            'university_id': university_id
+            'FirstName': first_name,
+            'LastName': last_name,
+            'Role': 'User',
+            'university_id': university_id,
         }
         
-        response = requests.post(os.getenv('API_URL')+'Resgister', json=data, headers=headers, verify=False)
+        response = requests.post(os.getenv('API_URL')+'User', json=data, headers=headers, verify=False)
         
 
-        # if debug:
-        #     print("URL:", os.getenv('API_URL')+'Resgister')
-        #     print(f'Status code: {response.status_code}')
-        #     print(f'Headers: {headers}')
-        #     print(f'Response: {response.text}')
+        if debug:
+            print("URL:", os.getenv('API_URL')+'User')
+            print(f'Status code: {response.status_code}')
+            print(f'Headers: {headers}')
+            print(f'Response: {response.text}')
         
         if response.status_code == 200:
             messages.success(request, 'You have successfully registered')
-            return redirect('/login')
+            return redirect('/')
         elif response.status_code == 400:
             messages.error(request, 'Invalid email or password')
             return render(request, 'register.html')
