@@ -4,11 +4,12 @@
     <h1>List of Places in {{university.name}}</h1>
     <div class="university-container">
         {% for place in places %}
-        <a href="/menu/{{place.id}}">
+        <a href="/menus/{{place.id}}">
             <div class="university-box">
-                <p>{{place.id}}</p>
-                <p>{{ place.name }}</p>
+                <p><b>{{ place.name }}</b></p>
+                <hr>
                 <p>{{ place.description }}</p>
+                <hr>
                 <p>{{ place.priceAverage }}</p>
             </div>
         </a>
