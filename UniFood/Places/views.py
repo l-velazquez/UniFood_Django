@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import os
 import requests
 from django.contrib import messages
+import jwt
 
 load_dotenv()
 
@@ -44,3 +45,35 @@ def get_all_places(request, id):
 
     
     return render(request, 'Places.html', extra_context)
+
+
+
+def set_favorite_place(request, id):
+    token = request.session.get('jwt')
+    token_data = jwt.decode(token, verify=False, algorithms=['HS256'], options={"verify_signature": False})
+    token_user_email = token_data['email']
+
+    headers = {
+        'ApiKey': f'{api_key}',
+        'Authorization': f'Bearer {token}',
+    }
+    
+    get_user_by_email = requests.get(api_url + f'Users/email/{token_user_email}', headers=headers, verify=False)
+
+    users_name = get_user_by_email.json()
+    users_id = users_name['id']
+
+
+    request_data = {
+        'userId': users_id,
+        'placeId': id
+    }
+
+    response = requests.post(api_url + 'FavoritePlaces', headers=headers, json=request_data, verify=False)
+
+    if debug:
+        print(f'URL: {api_url}FavoritePlaces')
+        print(f'Status code: {response.status_code}')
+        print(f'Response: {response.text}')
+
+    

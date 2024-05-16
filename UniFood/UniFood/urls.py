@@ -33,6 +33,6 @@ urlpatterns = [
     path('places/<int:id>', place_views.get_all_places, name='places'),
     #path('menus/', menu_views.get_all_menus, name='menus'),
     path('menus/<int:id>/<int:university_id>/', menu_views.get_menus, name='menu'),
-
+    path('profile/', user_views.profile, name='profile'),
 
 ]
