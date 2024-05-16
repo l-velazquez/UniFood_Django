@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    UniFood
+{% endblock %}
+{% block content %}
+<style>
+    body {
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        background-color: #f7f7f7;
+        padding: 40px;
+    }
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+    p {
+        text-align: center;
+        color: #666;
+    }
+    img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+        height: 50%;
+    }
+    h3 {
+        text-align: left;
+        color: #333;
+    }
+</style>
+<h2> Profile </h3>
+
+<div class="container">
+    
+    <div class="col-md-8">
+            <h3>Name: {{user.firstName}}</h3>
+            <h3>Last Name: {{user.lastName}}</h3>
+            <h3>Email: {{user.email}}</h3>
+            <h3>University: {{university.name}}</h3>
+            <h3>Favorite Places: </h3>
+            
+            <div style="text-align: right;">
+            <button class="btn btn-primary">Edit</button> 
+            </div>
+    </div>
+</div>
+
+{% endblock %}
