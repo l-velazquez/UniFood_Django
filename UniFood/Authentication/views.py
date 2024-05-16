@@ -93,11 +93,11 @@ def register(request):
             'university_id': university_id,
         }
         
-        response = requests.post(os.getenv('API_URL')+'User', json=data, headers=headers, verify=False)
+        response = requests.post(os.getenv('API_URL')+'Users', json=data, headers=headers, verify=False)
         
 
         if debug:
-            print("URL:", os.getenv('API_URL')+'User')
+            print("URL:", os.getenv('API_URL')+'Users')
             print(f'Status code: {response.status_code}')
             print(f'Headers: {headers}')
             print(f'Response: {response.text}')

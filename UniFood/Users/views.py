@@ -25,10 +25,10 @@ def home(request):
     
     get_user_by_email = requests.get(api_url + f'Users/email/{token_user_email}', headers=headers, verify=False)
 
-    users_name = get_user_by_email.json()
-    users_name = users_name['firstName']
+    user= get_user_by_email.json()
+    
 
-    extra_context = {'users_name': users_name}
+    extra_context = {'user': user}
 
     if not token:
         return render(request, 'login.html')
@@ -96,7 +96,7 @@ def profile(request):
     
     if uni_name.status_code == 400:
         university = {'name': 'University not found'}
-        
+
     elif uni_name.status_code == 401:
         messages.error(request, 'You are not authorized to view this page. Please login.')
         return render(request, 'login.html')

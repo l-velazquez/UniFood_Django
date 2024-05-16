@@ -32,8 +32,13 @@
     }
 </style>
 
-<h1>Hello, {{users_name}}!</h1>
+<h1>Hello, {{user.firstName}}!</h1>
 
 <h3>Welcome to UniFood, the best place to find food around your university!</h3>
 
+<hr>
+
+<div class="d-grid gap-2">
+    <a href="/places/{{ user.universityId }}" class="btn btn-primary">Places near my university</a>
+</div>
 {% endblock %}
