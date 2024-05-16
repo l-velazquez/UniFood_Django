@@ -2,31 +2,43 @@ from django.shortcuts import render
 import requests
 from dotenv import load_dotenv
 import os
+from django.contrib import messages
 
 load_dotenv()
 debug = os.getenv('DJANGO_DEBUG')
 
 api_url = os.getenv('API_URL')
 
-# Create your views here.
-
-def get_menus(id,request):
+def get_menus(request, id):
     token = request.session.get('jwt')
     if not token:
         return render(request, 'login.html')
     
     # Get all menus from API
-    headers = {'Authorization': f'Bearer {token}'}
-
-    response = requests.get(api_url + f'/menus/{id}/', headers=headers)
-
+    headers = {'Authorization': f'Bearer {token}',
+               'ApiKey': os.getenv('API_KEY')
+               }
+    response = requests.get(api_url + f'menus/{id}/', headers=headers, verify=False)
+    place_name = requests.get(api_url + f'places/{id}/', headers=headers, verify=False)
+    
     if debug:
-        print(f'URL: {api_url}')
+        print(f'URL: {api_url}menus/{id}/')
         print(f'Status code: {response.status_code}')
         print(f'Response: {response.text}')
     
     menus = response.json()
+    if response.status_code == 401:
+        messages.error(request, 'You are not authorized to view this page. Please login.')
+        return render(request, 'login.html')
+    elif response.status_code == 404:
+        return render(request, 'error/404.html')
+    else:
+        extra_context = {'menus': menus}
 
-    return menus
+        if debug:
+            print(f'Context: {extra_context}')
+
+    return render(request, 'Menu.html', extra_context)
+
 
     
