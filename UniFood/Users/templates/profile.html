@@ -2,50 +2,63 @@
 {% load static %}
 
 {% block title %}
-    UniFood
+    UniFood - Profile
 {% endblock %}
 {% block content %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 <style>
     body {
         font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         background-color: #f7f7f7;
-        padding: 40px;
     }
-    h1 {
+    .profile-header {
         text-align: center;
         color: #333;
+        margin-bottom: 30px;
     }
-    p {
-        text-align: center;
+    .profile-info {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .profile-info h3 {
+        color: #333;
+    }
+    .profile-info p {
         color: #666;
+        margin: 0;
     }
-    img {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        width: 50%;
-        height: 50%;
-    }
-    h3 {
-        text-align: left;
-        color: #333;
+    .edit-button {
+        text-align: right;
+        margin-top: 20px;
     }
 </style>
-<h2> Profile </h3>
 
 <div class="container">
-    
-    <div class="col-md-8">
-            <h3>Name: {{user.firstName}}</h3>
-            <h3>Last Name: {{user.lastName}}</h3>
-            <h3>Email: {{user.email}}</h3>
-            <h3>University: {{university.name}}</h3>
-            <h3>Favorite Places: </h3>
-            
-            <div style="text-align: right;">
-            <button class="btn btn-primary">Edit</button> 
+    <div class="row justify-content-center">
+        <div class="col-md-8 profile-info">
+            <h3>Profile Details</h3>
+            <p><strong>Name:</strong> {{ user.firstName }}</p>
+            <p><strong>Last Name:</strong> {{ user.lastName }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>University:</strong> {{ university.name }}</p>
+            <p><strong>Favorite Places:</strong></p>
+            <ul>
+                <!-- Assuming favorite places is a list of places -->
+                {% for place in user.favoritePlaces %}
+                    <li>{{ place }}</li>
+                {% endfor %}
+            </ul>
+            <div class="edit-button">
+                <button class="btn btn-primary">Edit</button>
             </div>
+        </div>
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 {% endblock %}
