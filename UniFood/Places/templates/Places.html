@@ -7,7 +7,7 @@
     <h1>List of Places in {{university.name}}</h1>
     <div class="university-container">
         {% for place in places %}
-        <a href="/menus/{{place.id}}">
+        <a href="/menus/{{place.id}}/{{university.id}}">
             <div class="university-box">
                 <p><b>{{ place.name }}</b></p>
                 <hr>
