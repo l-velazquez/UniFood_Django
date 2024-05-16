@@ -1,6 +1,9 @@
 {% extends 'uni_base.html' %}
 
 {% block content %}
+
+    <a href="/universities" class="btn btn-secondary" align='center'>Go Back to Universities</a>
+    <hr>
     <h1>List of Places in {{university.name}}</h1>
     <div class="university-container">
         {% for place in places %}
@@ -16,6 +19,7 @@
         </a>
         {% endfor %}
     </div>
+
 {% endblock %}
 
 
