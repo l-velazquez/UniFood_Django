@@ -9,7 +9,7 @@ debug = os.getenv('DJANGO_DEBUG')
 
 api_url = os.getenv('API_URL')
 
-def get_menus(request, id):
+def get_menus(request, id, university_id):
     token = request.session.get('jwt')
     if not token:
         return render(request, 'login.html')
@@ -19,8 +19,9 @@ def get_menus(request, id):
                'ApiKey': os.getenv('API_KEY')
                }
     response = requests.get(api_url + f'menus/{id}/', headers=headers, verify=False)
-    place_name = requests.get(api_url + f'places/{id}/', headers=headers, verify=False)
-    
+    place_name = requests.get(api_url + f'places/{university_id}?placeId={id}', headers=headers, verify=False)
+    place = place_name.json()
+
     if debug:
         print(f'URL: {api_url}menus/{id}/')
         print(f'Status code: {response.status_code}')
@@ -33,7 +34,7 @@ def get_menus(request, id):
     elif response.status_code == 404:
         return render(request, 'error/404.html')
     else:
-        extra_context = {'menus': menus}
+        extra_context = {'menus': menus, 'place': place}
 
         if debug:
             print(f'Context: {extra_context}')
