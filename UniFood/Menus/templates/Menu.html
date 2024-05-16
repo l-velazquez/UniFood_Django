@@ -1,0 +1,28 @@
+{% extends 'uni_base.html' %}
+
+{% block content %}
+
+</style>
+    <h1>Menu </h1>
+    <div class="university-container">
+        {% for items in menus %}
+            <div class="university-box">
+                <b>Product Name</b>
+                <br>
+                 {{ items.name}}
+                <hr>
+                <b>Description</b> 
+                <br>
+                {{ items.description }}
+                <hr>
+                <b>Price</b>
+                <br>
+                {{ items.price }}
+            </div>
+            
+        {% endfor %}
+        
+    </div>
+
+    <button class="btn btn-primary" align='center' >Add to Favorites</button>
+{% endblock %}
