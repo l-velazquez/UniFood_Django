@@ -90,7 +90,7 @@ def profile(request):
     uni_name = requests.get(api_url + f'Universities/{uni_id}', headers=headers, verify=False)
     university = uni_name.json()
     if debug:
-        print(f'URL: {api_url}/Universities/{uni_id}')
+        print(f'URL: {api_url}Universities/{uni_id}')
         print(f'Status code: {uni_name.status_code}')
         print(f'Response: {uni_name.text}')
     

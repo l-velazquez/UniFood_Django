@@ -42,4 +42,3 @@ def get_menus(request, id, university_id):
     return render(request, 'Menu.html', extra_context)
 
 
-    

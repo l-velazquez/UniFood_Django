@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import os
 from django.contrib import messages
 from django.shortcuts import redirect
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 
 # Create your views here.
 
@@ -83,6 +83,11 @@ def register(request):
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         university_id = request.POST.get('university_id')
+        
+        now = datetime.now(timezone(timedelta(hours=-4)))
+
+        # Format the datetime object in the specified format
+        formatted_datetime = now.isoformat(timespec='microseconds')
 
         data = {
             'email': email,
@@ -90,9 +95,12 @@ def register(request):
             'FirstName': first_name,
             'LastName': last_name,
             'Role': 'User',
-            'university_id': university_id,
+            'universityId': university_id,
+            'lastLogin': formatted_datetime,
+            'registerOn': formatted_datetime
         }
         
+
         response = requests.post(os.getenv('API_URL')+'Users', json=data, headers=headers, verify=False)
         
 
