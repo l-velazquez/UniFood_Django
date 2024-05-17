@@ -1,0 +1,32 @@
+{% extends 'uni_base.html' %}
+
+{% block content %}
+
+    <a href="/universities" class="btn btn-secondary" align='center'>Go Back to Universities</a>
+    <hr>
+    <h1>List of your favorite places</h1>
+    <div class="university-container">
+        {% for place in favorite_places %}
+        <a href="/menus/{{place.id}}/{{university_id}}">
+            <div class="university-box">
+                <p><b>{{ place.name }}</b></p>
+                <hr>
+                <p>{{ place.description }}</p>
+                <hr>
+                <p><b>Price Average:</b></p>
+                <p>{{ place.priceAverage }}</p>
+
+                <form action="{% url 'remove_favorite' place.fav_id %}" method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-danger" align='center' type="submit">Remove place from Favorites</button>
+                </form>
+
+            </div>
+        </a>
+        
+        {% endfor %} 
+    </div>
+
+{% endblock %}
+
+

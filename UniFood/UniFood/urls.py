@@ -34,5 +34,8 @@ urlpatterns = [
     #path('menus/', menu_views.get_all_menus, name='menus'),
     path('menus/<int:id>/<int:university_id>/', menu_views.get_menus, name='menu'),
     path('profile/', user_views.profile, name='profile'),
+    path('set_favorite/<int:id>/', place_views.set_favorite, name='set_favorite'),
+    path('favorites/', place_views.view_favorite, name='favorites'),
+    path('remove_favorite/<int:id>/', place_views.remove_favorite, name='remove_favorite'),
 
 ]

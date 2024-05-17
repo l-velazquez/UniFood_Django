@@ -48,8 +48,99 @@ def get_all_places(request, id):
 
 
 
-def set_favorite_place(request, id):
+def set_favorite(request, id):
     token = request.session.get('jwt')
+    if not token:
+        return render(request, 'login.html')
+    
+    token_data = jwt.decode(token, verify=False, algorithms=['HS256'], options={"verify_signature": False})
+    token_user_email = token_data['email']
+
+    headers = {
+        'ApiKey': f'{api_key}',
+        'Authorization': f'Bearer {token}',
+    }
+    
+    get_user_by_email = requests.get(api_url + f'Users/email/{token_user_email}', headers=headers, verify=False)
+
+    users_name = get_user_by_email.json()
+    users_id = users_name['id']
+    university_id_of_user = users_name['universityId']
+
+
+    request_data = {
+        'userId': users_id,
+        'placeId': id
+    }
+
+    print(request_data)
+    response = requests.post(api_url + 'Favorites', headers=headers, json=request_data, verify=False)
+
+    if debug:
+        print(f'URL: {api_url}FavoritePlaces')
+        print(f'Status code: {response.status_code}')
+        print(f'Response: {response.text}')
+
+    if response.status_code == 401:
+        messages.error(request, 'You are not authorized to view this page. Please login.')
+        return render(request, 'login.html')
+    elif response.status_code == 404:
+        return render(request, 'error/404.html')
+    else:
+        messages.success(request, 'Place added to favorites!')
+        return get_all_places(request, university_id_of_user)
+    
+
+def view_favorite(request):
+    token = request.session.get('jwt')
+    if not token:
+        return render(request, 'login.html')
+    
+    token_data = jwt.decode(token, verify=False, algorithms=['HS256'], options={"verify_signature": False})
+    token_user_email = token_data['email']
+
+    headers = {
+        'ApiKey': f'{api_key}',
+        'Authorization': f'Bearer {token}',
+    }
+    
+    get_user_by_email = requests.get(api_url + f'Users/email/{token_user_email}', headers=headers, verify=False)
+
+    users_name = get_user_by_email.json()
+    users_id = users_name['id']
+    users_university_id = users_name['universityId']
+
+
+    response = requests.get(api_url + f'Favorites/{users_id}', headers=headers, verify=False)
+    response_data = response.json()
+
+    favorite_places = []
+    for favorite in response_data:
+        place_id = favorite['placeId']
+        get_places_from_favorites = requests.get(api_url + f'Places/{users_university_id}?placeId={place_id}', headers=headers, verify=False)
+        get_places_from_favorites_data = get_places_from_favorites.json()
+        get_places_from_favorites_data['fav_id'] = favorite['id']
+        favorite_places.append(get_places_from_favorites_data)
+        
+
+    print(favorite_places)
+
+    if response.status_code == 401:
+        messages.error(request, 'You are not authorized to view this page. Please login.')
+        return render(request, 'login.html')
+    elif response.status_code == 404:
+        return render(request, 'error/404.html')
+    else:
+        extra_context = {'favorite_places': favorite_places, 'university_id': users_university_id}
+
+    return render(request, 'Favorites.html', extra_context)
+
+
+def remove_favorite(request, id):
+    token = request.session.get('jwt')
+    if not token:
+        return render(request, 'login.html')
+    
     token_data = jwt.decode(token, verify=False, algorithms=['HS256'], options={"verify_signature": False})
     token_user_email = token_data['email']
 
@@ -63,17 +154,18 @@ def set_favorite_place(request, id):
     users_name = get_user_by_email.json()
     users_id = users_name['id']
 
-
-    request_data = {
-        'userId': users_id,
-        'placeId': id
-    }
-
-    response = requests.post(api_url + 'FavoritePlaces', headers=headers, json=request_data, verify=False)
+    response = requests.delete(api_url + f'Favorites/{id}', headers=headers, verify=False)
 
     if debug:
-        print(f'URL: {api_url}FavoritePlaces')
+        print(f'URL: {api_url}Favorites/{users_id}/{id}')
         print(f'Status code: {response.status_code}')
         print(f'Response: {response.text}')
 
-    
+    if response.status_code == 401:
+        messages.error(request, 'You are not authorized to view this page. Please login.')
+        return render(request, 'login.html')
+    elif response.status_code == 404:
+        return render(request, 'error/404.html')
+    else:
+        messages.success(request, 'Place removed from favorites!')
+        return view_favorite(request)
