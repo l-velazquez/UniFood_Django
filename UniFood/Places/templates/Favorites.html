@@ -1,10 +1,7 @@
 {% extends 'uni_base.html' %}
 
 {% block content %}
-
-    <a href="/universities" class="btn btn-secondary" align='center'>Go Back to Universities</a>
-    <hr>
-    <h1>List of your favorite places</h1>
+    <h1>Favorite places</h1>
     <div class="university-container">
         {% for place in favorite_places %}
         <a href="/menus/{{place.id}}/{{university_id}}">
