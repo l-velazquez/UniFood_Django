@@ -23,7 +23,12 @@
         {% endfor %}
         
     </div>
-    <div class="d-grid gap-2">
-        <button class="btn btn-primary" align='center' >Add to Favorites</button>
-    </div>
+    
+    <form action="{% url 'set_favorite' place.id %}" method="post">
+        {% csrf_token %}
+        <div class="d-grid gap-2">
+            <button class="btn btn-primary" align='center' type="submit">Add place to Favorites</button>
+        </div>
+    </form>
+    </form>
 {% endblock %}
