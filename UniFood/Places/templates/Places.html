@@ -1,6 +1,13 @@
 {% extends 'uni_base.html' %}
 
 {% block content %}
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
 
     <a href="/universities" class="btn btn-secondary" align='center'>Go Back to Universities</a>
     <hr>
@@ -15,6 +22,12 @@
                 <hr>
                 <p><b>Price Average:</b></p>
                 <p>{{ place.priceAverage }}</p>
+                <form action="{% url 'set_favorite' place.id %}" method="post">
+                    {% csrf_token %}
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary" align='center' type="submit">Add place to Favorites</button>
+                    </div>
+                </form>
             </div>
         </a>
         {% endfor %}
