@@ -1,0 +1,82 @@
+{% extends 'base.html'%}
+
+{% block content %}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<style>
+    body {
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        background-color: #f7f7f7;
+    }
+    .profile-header {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+    }
+    .profile-info {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        margin-top: 50px;
+    }
+    .profile-info h3 {
+        color: #333;
+        margin-bottom: 20px;
+    }
+    .form-group label {
+        font-weight: bold;
+        color: #555;
+    }
+    .form-control {
+        border-radius: 5px;
+        box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        border-radius: 5px;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+    }
+</style>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 profile-info">
+            <h3>Profile Details</h3>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="first_name">First Name:</label>
+                    <input type="text" class="form-control" id="first_name" name="first_name" value="{{ user.first_name }}">
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Last Name:</label>
+                    <input type="text" class="form-control" id="last_name" name="last_name" value="{{ user.last_name }}">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}">
+                </div>
+                <div class="form-group">
+                    <label for="university_id">University:</label>
+                    <select name="university_id" id="university_id" class="form-control" required>
+                        <option value="" disabled selected>Select your university</option>
+                        {% for university in universities %}
+                            <option value="{{ university.id }}" {% if university.id == user.university_id %}selected{% endif %}>{{ university.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="text-right">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

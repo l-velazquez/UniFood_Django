@@ -1,0 +1,172 @@
+{% extends "base_admin.html" %}
+
+{% block title %}
+    UniFood
+{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        background-color: #f7f7f7;
+        padding: 40px;
+    }
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+    p {
+        text-align: center;
+        color: #666;
+    }
+    img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+        height: 50%;
+    }
+    h3 {
+        text-align: center;
+        color: #333;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 18px;
+        text-align: left;
+        background-color: #fff;
+        border-radius: 5px;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    thead {
+        background-color: #333;
+        color: #fff;
+    }
+    th, td {
+        padding: 12px 15px;
+    }
+    tr {
+        border-bottom: 1px solid #ddd;
+    }
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+    .alert {
+        padding: 20px;
+        margin: 20px 0;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+    .alert-success {
+        color: #3c763d;
+        background-color: #dff0d8;
+        border-color: #d6e9c6;
+    }
+    .alert-info {
+        color: #31708f;
+        background-color: #d9edf7;
+        border-color: #bce8f1;
+    }
+    .alert-warning {
+        color: #8a6d3b;
+        background-color: #fcf8e3;
+        border-color: #faebcc;
+    }
+    .alert-danger {
+        color: #a94442;
+        background-color: #f2dede;
+        border-color: #ebccd1;
+    }
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    .pagination a, .pagination span {
+        margin: 0 5px;
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        color: #333;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+    .pagination a:hover {
+        background-color: #f1f1f1;
+    }
+    .pagination .current {
+        background-color: #333;
+        color: #fff;
+        border: none;
+    }
+</style>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<form method="get" id="pagination-form">
+    <label for="page_size">Users per page:</label>
+    <select name="page_size" id="page_size" onchange="document.getElementById('pagination-form').submit();">
+        <option value="5" {% if page_size == 5 %}selected{% endif %}>5</option>
+        <option value="10" {% if page_size == 10 %}selected{% endif %}>10</option>
+        <option value="20" {% if page_size == 20 %}selected{% endif %}>20</option>
+        <option value="50" {% if page_size == 50 %}selected{% endif %}>50</option>
+    </select>
+</form>
+
+<table>
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Role</th>
+            <th>University</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.email }}</td>
+                <td>{{ user.firstName }}</td>
+                <td>{{ user.lastName }}</td>
+                <td>{{ user.role }}</td>
+                <td>{{user.universityId}}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="pagination">
+    {% if page_obj.has_previous %}
+        <a href="?page=1&page_size={{ page_size }}">&laquo; first</a>
+        <a href="?page={{ page_obj.previous_page_number }}&page_size={{ page_size }}">&lsaquo; previous</a>
+    {% else %}
+        <span>&laquo; first</span>
+        <span>&lsaquo; previous</span>
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+            <span class="current">{{ num }}</span>
+        {% else %}
+            <a href="?page={{ num }}&page_size={{ page_size }}">{{ num }}</a>
+        {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}&page_size={{ page_size }}">next &rsaquo;</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}&page_size={{ page_size }}">last &raquo;</a>
+    {% else %}
+        <span>next &rsaquo;</span>
+        <span>last &raquo;</span>
+    {% endif %}
+</div>
+{% endblock %}

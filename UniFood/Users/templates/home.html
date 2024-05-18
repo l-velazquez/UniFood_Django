@@ -31,17 +31,21 @@
         color: #333;
     }
 </style>
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
 
 <h1>Hello, {{user.firstName}}!</h1>
 
 <h3>Welcome to UniFood, the best place to find food around your university!</h3>
 
 <hr>
-<div class="d-grid gap-2">
-    <a href="/universities" class="btn btn-secondary">List of Universities</a>
-</div>
 <br>
 <div class="d-grid gap-2">
-    <a href="/places/{{ user.universityId }}" class="btn btn-primary">Places near my university</a>
+    <a href="/favorites" class="btn btn-primary">Places near my university</a>
 </div>
 {% endblock %}

@@ -45,15 +45,23 @@
             <p><strong>Email:</strong> {{ user.email }}</p>
             <p><strong>University:</strong> {{ university.name }}</p>
             <p><strong>Favorite Places:</strong></p>
-            <ul>
-                <!-- Assuming favorite places is a list of places -->
-                {% for place in user.favoritePlaces %}
-                    <li>{{ place }}</li>
-                {% endfor %}
+            {% if favorite_places %}
+                <ul>
+                    {% for place in favorite_places %}
+                        <li>{{ place.name }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No favorite places found.</p>
+            {% endif %}
             </ul>
-            <div class="edit-button">
-                <button class="btn btn-primary">Edit</button>
-            </div>
+            <form action="{% url 'profile_edit'%}" method="post">
+                {% csrf_token %}
+                <div class="edit-button">
+                    <button class="btn btn-primary" type="submit">Edit Profile</button>
+                </div>
+            </form>
+            <hr>
         </div>
     </div>
 </div>
