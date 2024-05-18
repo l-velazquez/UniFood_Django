@@ -23,19 +23,21 @@ from Menus import views as menu_views
 from Users import views as user_views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', auth_views.login, name='login'),
     path('logout/', auth_views.logout, name='logout'),
     path('register/', auth_views.register, name='register'),
     path('home/', user_views.home, name='home'),
-    path('universities/', uni_views.get_all_universities, name='universities'),
-    path('universities/<int:university_id>/', uni_views.get_university, name='university'),
-    path('places/<int:id>', place_views.get_all_places, name='places'),
-    #path('menus/', menu_views.get_all_menus, name='menus'),
-    path('menus/<int:id>/<int:university_id>/', menu_views.get_menus, name='menu'),
     path('profile/', user_views.profile, name='profile'),
+    path('edit/', user_views.edit_profile, name='profile_edit'),
     path('set_favorite/<int:id>/', place_views.set_favorite, name='set_favorite'),
     path('favorites/', place_views.view_favorite, name='favorites'),
     path('remove_favorite/<int:id>/', place_views.remove_favorite, name='remove_favorite'),
+    path('universities/', uni_views.get_all_universities, name='universities'),
+    path('universities/<int:university_id>/', uni_views.get_university, name='university'),
+    path('places/<int:id>', place_views.get_all_places, name='places'),
+    path('menus/<int:id>/<int:university_id>/', menu_views.get_menus, name='menu'),
+    path('admin/', user_views.admin_users, name='admin'),
+    path('users/', user_views.get_all_users, name='admin_users'),
+
 
 ]
