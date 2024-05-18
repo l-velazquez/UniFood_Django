@@ -1,0 +1,39 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>403 Forbidden</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            font-size: 50px;
+            color: #555;
+        }
+        p {
+            font-size: 24px;
+        }
+        a {
+            color: #06f;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>403 Forbidden</h1>
+    <p>Sorry, you don't have permission to access this page.</p>
+    <img src="{% static 'image/403.gif' %}">
+    <p><a href="/home">Go to Homepage</a></p>
+</body>
+</html>
