@@ -6,6 +6,8 @@ This is a Django web app the consumes an API created in C# using ASP.NET Core. T
 
 Setting up development environment for Django API consumer frontend.
 
+Live demo: [UniFood](https://rpi4.tail78a70.ts.net/)
+
 ## Setup
 
 1. Clone the repository:
@@ -44,6 +46,7 @@ Edit any of the information that .env requires. If deploying to production, make
 
 ```bash
 cd UniFood
+python manage.py migrate
 python manage.py runserver
 ```
 
