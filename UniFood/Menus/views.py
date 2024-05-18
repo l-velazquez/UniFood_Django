@@ -37,8 +37,8 @@ def get_menus(request, id, university_id):
     else:
         extra_context = {'menus': menus, 'place': place}
 
-        if debug:
-            print(f'Context: {extra_context}')
+        # if debug:
+        #     print(f'Context: {extra_context}')
 
     return render(request, 'Menu.html', extra_context)
 

@@ -19,9 +19,9 @@ def login(request):
 
         # For debugging purposes
           # Set to False in production
-        if debug:
-            print(f'Email: {email}')
-            print(f'Password: {password}')
+        # if debug:
+        #     print(f'Email: {email}')
+        #     print(f'Password: {password}')
 
         # Send credentials to API
         api_url = os.getenv('API_URL') + 'Login'
@@ -104,11 +104,11 @@ def register(request):
         response = requests.post(os.getenv('API_URL')+'Users', json=data, headers=headers, verify=False)
         
 
-        if debug:
-            print("URL:", os.getenv('API_URL')+'Users')
-            print(f'Status code: {response.status_code}')
-            print(f'Headers: {headers}')
-            print(f'Response: {response.text}')
+        # if debug:
+        #     print("URL:", os.getenv('API_URL')+'Users')
+        #     print(f'Status code: {response.status_code}')
+        #     print(f'Headers: {headers}')
+        #     print(f'Response: {response.text}')
         
         if response.status_code == 200:
             messages.success(request, 'You have successfully registered')

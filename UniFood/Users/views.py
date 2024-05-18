@@ -60,11 +60,11 @@ def get_all_users(request):
     universities = requests.get(api_url + 'Universities', headers=headers, verify=False)
     universities = universities.json()
     
-    if debug:
-        print(f'URL: {api_url}Users?page={page}&pageSize={page_size}')
-        print(f"Token: {token}")
-        print(f'API Key: {api_key}')
-        print(f'Status code: {response.status_code}')
+    # if debug:
+    #     print(f'URL: {api_url}Users?page={page}&pageSize={page_size}')
+    #     print(f"Token: {token}")
+    #     print(f'API Key: {api_key}')
+    #     print(f'Status code: {response.status_code}')
     
     if response.status_code == 401:
         messages.error(request, 'You are not authorized to view this page. Please login.')
@@ -86,8 +86,8 @@ def get_all_users(request):
 
         extra_context = {'users': page_obj, 'page_obj': page_obj, 'total_users': total_users, 'page_size': page_size}
 
-        if debug:
-            print(f'Context: {extra_context}')
+        # if debug:
+        #     print(f'Context: {extra_context}')
 
         return render(request, 'users.html', extra_context)
     
@@ -162,8 +162,8 @@ def edit_profile(request):
 
     extra_context = {'user': user, 'user_uni': user_uni, 'universities': universities}
 
-    if debug:
-        print(f'Context: {extra_context}')
+    # if debug:
+    #     print(f'Context: {extra_context}')
 
 
     if request.method == 'POST':

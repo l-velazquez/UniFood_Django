@@ -29,11 +29,11 @@ def get_all_places(request, id):
     places = response.json()
     university = get_university.json()
     
-    if debug:
-        print(f'URL: {api_url}Places/{id}')
-        print(f'Status code: {response.status_code}')
-        print(f'Headers: {headers}')
-        print(f'Response: {response.text}')
+    # if debug:
+    #     print(f'URL: {api_url}Places/{id}')
+    #     print(f'Status code: {response.status_code}')
+    #     print(f'Headers: {headers}')
+    #     print(f'Response: {response.text}')
 
     if response.status_code == 401:
         messages.error(request, 'You are not authorized to view this page. Please login.')
@@ -76,10 +76,10 @@ def set_favorite(request, id):
     print(request_data)
     response = requests.post(api_url + 'Favorites', headers=headers, json=request_data, verify=False)
 
-    if debug:
-        print(f'URL: {api_url}FavoritePlaces')
-        print(f'Status code: {response.status_code}')
-        print(f'Response: {response.text}')
+    # if debug:
+    #     print(f'URL: {api_url}FavoritePlaces')
+    #     print(f'Status code: {response.status_code}')
+    #     print(f'Response: {response.text}')
 
     if response.status_code == 401:
         messages.error(request, 'You are not authorized to view this page. Please login.')
@@ -166,10 +166,10 @@ def remove_favorite(request, id):
 
     response = requests.delete(api_url + f'Favorites/{id}', headers=headers, verify=False)
 
-    if debug:
-        print(f'URL: {api_url}Favorites/{users_id}/{id}')
-        print(f'Status code: {response.status_code}')
-        print(f'Response: {response.text}')
+    # if debug:
+    #     print(f'URL: {api_url}Favorites/{users_id}/{id}')
+    #     print(f'Status code: {response.status_code}')
+    #     print(f'Response: {response.text}')
 
     if response.status_code == 401:
         messages.error(request, 'You are not authorized to view this page. Please login.')
