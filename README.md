@@ -45,9 +45,9 @@ Edit any of the information that .env requires. If deploying to production, make
 6. Run the Django server:
 
 ```bash
-cd UniFood
-python manage.py migrate
-python manage.py runserver
+cd UniFood # Change to the project directory
+python manage.py migrate # Create the database to store session data
+python manage.py runserver # Run the server on localhost port 8000
 ```
 
 The server will run on 'http://localhost:8000/'.
