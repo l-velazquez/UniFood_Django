@@ -88,7 +88,7 @@ def set_favorite(request, id):
         return render(request, 'error/404.html')
     else:
         messages.success(request, 'Place added to favorites!')
-        return get_all_places(request, university_id_of_user)
+        return view_favorite(request)
     
 
 def view_favorite(request):
@@ -106,12 +106,17 @@ def view_favorite(request):
     
     get_user_by_email = requests.get(api_url + f'Users/email/{token_user_email}', headers=headers, verify=False)
 
-    users_name = get_user_by_email.json()
-    users_id = users_name['id']
-    users_university_id = users_name['universityId']
+    user = get_user_by_email.json()
+    user_id = user['id']
+    users_university_id = user['universityId']
+
+    # get university name from user
+    university = requests.get(api_url + f'Universities/{users_university_id}', headers=headers, verify=False)
+    university = university.json()
 
 
-    response = requests.get(api_url + f'Favorites/{users_id}', headers=headers, verify=False)
+    # get all favorite places from user
+    response = requests.get(api_url + f'Favorites/{user_id}', headers=headers, verify=False)
     response_data = response.json()
 
     favorite_places = []
@@ -121,9 +126,14 @@ def view_favorite(request):
         get_places_from_favorites_data = get_places_from_favorites.json()
         get_places_from_favorites_data['fav_id'] = favorite['id']
         favorite_places.append(get_places_from_favorites_data)
-        
 
-    print(favorite_places)
+    # get all places from users university
+    get_all_places = requests.get(api_url + f'Places/{users_university_id}', headers=headers, verify=False)
+    all_places = get_all_places.json()
+
+    # Remove favorite places from all places
+    favorite_place_ids = {fav['id'] for fav in favorite_places}
+    places = [place for place in all_places if place['id'] not in favorite_place_ids]
 
     if response.status_code == 401:
         messages.error(request, 'You are not authorized to view this page. Please login.')
@@ -131,7 +141,7 @@ def view_favorite(request):
     elif response.status_code == 404:
         return render(request, 'error/404.html')
     else:
-        extra_context = {'favorite_places': favorite_places, 'university_id': users_university_id}
+        extra_context = {'favorite_places': favorite_places, 'places': places, 'user': user, 'university': university}
 
     return render(request, 'Favorites.html', extra_context)
 
