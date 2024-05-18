@@ -15,8 +15,8 @@ api_key = os.getenv('API_KEY')
 def get_all_universities(request):
     token = request.session.get('jwt')
 
-    if not token:
-        return render(request, 'login.html')
+    # if not token:
+    #     return render(request, 'login.html')
     
     # Get all universities from API
     headers = {
