@@ -5,7 +5,7 @@
     <div class="university-container">
         {% if favorite_places %}
             {% for place in favorite_places %}
-            <a href="/menus/{{place.id}}/{{user.university_id}}">
+            <a href="/menus/{{place.id}}/{{university.id}}">
                 <div class="university-box">
                     <p><b>{{ place.name }}</b></p>
                     <hr>
