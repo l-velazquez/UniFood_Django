@@ -1,0 +1,51 @@
+{% extends 'base_admin.html' %}
+{% load static %}
+
+{% block title %}
+    UniFood
+{% endblock %}
+{% block content %}
+<style>
+    body {
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        background-color: #f7f7f7;
+        padding: 40px;
+    }
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+    p {
+        text-align: center;
+        color: #666;
+    }
+    img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+        height: 50%;
+    }
+    h3 {
+        text-align: center;
+        color: #333;
+    }
+</style>
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<h1>Admin Home</h1>
+
+<h3>You have admin controls. Please use with caution</h3>
+
+<hr>
+<br>
+<div class="d-grid gap-2">
+    <a href="/universities" class="btn btn-primary">See all Universities</a>
+</div>
+{% endblock %}
