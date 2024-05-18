@@ -3,8 +3,34 @@
 {% block content %}
     <h1>Favorite places</h1>
     <div class="university-container">
-        {% for place in favorite_places %}
-        <a href="/menus/{{place.id}}/{{university_id}}">
+        {% if favorite_places %}
+            {% for place in favorite_places %}
+            <a href="/menus/{{place.id}}/{{user.university_id}}">
+                <div class="university-box">
+                    <p><b>{{ place.name }}</b></p>
+                    <hr>
+                    <p>{{ place.description }}</p>
+                    <hr>
+                    <p><b>Price Average:</b></p>
+                    <p>{{ place.priceAverage }}</p>
+
+                    <form action="{% url 'remove_favorite' place.fav_id %}" method="post">
+                        {% csrf_token %}
+                        <button class="btn btn-danger" align='center' type="submit">Remove place from Favorites</button>
+                    </form>
+
+                </div>
+            </a>
+            {% endfor %}
+        {% else %}
+            <p>No favorites found.</p>
+        {% endif %}
+    </div>
+    <hr>
+    <h1>List of Places in {{university.name}}</h1>
+    <div class="university-container">
+        {% for place in places %}
+        <a href="/menus/{{place.id}}/{{university.id}}">
             <div class="university-box">
                 <p><b>{{ place.name }}</b></p>
                 <hr>
@@ -12,17 +38,17 @@
                 <hr>
                 <p><b>Price Average:</b></p>
                 <p>{{ place.priceAverage }}</p>
-
-                <form action="{% url 'remove_favorite' place.fav_id %}" method="post">
+                <form action="{% url 'set_favorite' place.id %}" method="post">
                     {% csrf_token %}
-                    <button class="btn btn-danger" align='center' type="submit">Remove place from Favorites</button>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary" align='center' type="submit">Add place to Favorites</button>
+                    </div>
                 </form>
-
             </div>
         </a>
-        
-        {% endfor %} 
+        {% endfor %}
     </div>
+
 
 {% endblock %}
 
