@@ -18,10 +18,9 @@ def login(request):
         password = request.POST.get('password')
 
         # For debugging purposes
-          # Set to False in production
-        # if debug:
-        #     print(f'Email: {email}')
-        #     print(f'Password: {password}')
+        # Set to False in production
+        print(f'Email: {email}')
+        #print(f'Password: {password}')
 
         # Send credentials to API
         api_url = os.getenv('API_URL') + 'Login'
