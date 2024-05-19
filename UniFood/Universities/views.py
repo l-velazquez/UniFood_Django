@@ -26,13 +26,13 @@ def get_all_universities(request):
 
     response = requests.get(api_url + 'Universities', headers=headers, verify=False)
 
-    if debug:
-        print(f'URL: {api_url}Universities')
-        # print(f"Token: {token}")
-        # print(f'API Key: {api_key}')
-        # print(f'Status code: {response.status_code}')
-        # print(f'Headers: {headers}')
-        # print(f'Response: {response.text}')
+    # if debug:
+    #     print(f'URL: {api_url}Universities')
+    #     # print(f"Token: {token}")
+    #     # print(f'API Key: {api_key}')
+    #     # print(f'Status code: {response.status_code}')
+    #     # print(f'Headers: {headers}')
+    #     # print(f'Response: {response.text}')
 
     if response.status_code == 401:
         messages.error(request, 'You are not authorized to view this page. Please login.')
@@ -60,10 +60,10 @@ def get_university(request, university_id):
     response = requests.get(api_url + f'/universities/{university_id}/', headers=headers)   
     university = response.json()
 
-    if debug:
-        print(f'URL: {api_url}')
-        print(f'Status code: {response.status_code}')
-        print(f'Response: {response.text}')
+    # if debug:
+    #     print(f'URL: {api_url}')
+    #     print(f'Status code: {response.status_code}')
+    #     print(f'Response: {response.text}')
 
     return render(request, 'university.html', {'university': university})
     
